@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagrama de Gantt - Cronograma del Proyecto</title>
+    <link rel="stylesheet" href="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.css" />
+    <script src="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.js"></script>
+    <style>
+        #gantt_here {
+            width: 100%;
+            height: 1000px;
+            background: white;
+        }
+    </style>
+</head>
+<body>
+
+<div id="gantt_here"></div>
+
+<script>
+    // Configuración inicial del diagrama de Gantt
+    gantt.config.xml_date = "%Y-%m-%d";
+    gantt.config.scale_unit = "week";
+    gantt.config.date_format = "Semana #%W, %Y";
+    gantt.config.columns = [
+        {name: "text", label: "Actividad", width: "*"},
+        {name: "start_date", label: "Inicio", width: 100, align: "center"},
+        {name: "end_date", label: "Fin", width: 100, align: "center"},
+        {name: "duration", label: "Duración", width: 80, align: "center"}
+    ];
+    gantt.config.details_on_dblclick = true;
+    gantt.config.details_on_create = true;
+    gantt.config.open_tree_initially = true; // Expande las fases al cargar
+
+    // Datos del cronograma
+    var tasks = {
+        data: [
+            {id: 1, text: "Fase 1: Preliminares", start_date: "2024-01-01", duration: 14, progress: 0},
+            {id: 2, text: "Estudio de terreno", start_date: "2024-01-01", end_date: "2024-01-14", duration: 14, parent: 1},
+            {id: 3, text: "Obtención de permisos y licencias", start_date: "2024-01-15", end_date: "2024-01-31", duration: 17, parent: 1},
+            {id: 4, text: "Diseño preliminar", start_date: "2024-02-01", end_date: "2024-02-28", duration: 28, parent: 1},
+            {id: 5, text: "Reunión de coordinación inicial", start_date: "2024-02-01", end_date: "2024-02-02", duration: 2, parent: 1},
+            {id: 6, text: "Fase 2: Ejecución", start_date: "2024-03-01", duration: 180, progress: 0},
+            {id: 7, text: "Movimientos de tierra", start_date: "2024-03-01", duration: 15, parent: 6},
+            {id: 8, text: "Desmonte y desbroce", start_date: "2024-03-01", end_date: "2024-03-05", duration: 5, parent: 7},
+            {id: 9, text: "Excavación", start_date: "2024-03-06", end_date: "2024-03-10", duration: 5, parent: 7},
+            {id: 10, text: "Relleno y compactación", start_date: "2024-03-11", end_date: "2024-03-15", duration: 5, parent: 7},
+            {id: 11, text: "Cimentación", start_date: "2024-03-16", duration: 30, parent: 6},
+            {id: 12, text: "Colocación de encofrados", start_date: "2024-03-16", end_date: "2024-03-20", duration: 5, parent: 11},
+            {id: 13, text: "Vertido de concreto", start_date: "2024-03-21", end_date: "2024-03-25", duration: 5, parent: 11},
+            {id: 14, text: "Curado y desmoldado", start_date: "2024-03-26", end_date: "2024-03-30", duration: 5, parent: 11},
+            {id: 15, text: "Estructura del edificio", start_date: "2024-04-01", duration: 60, parent: 6},
+            {id: 16, text: "Colocación de columnas y vigas", start_date: "2024-04-01", end_date: "2024-04-30", duration: 30, parent: 15},
+            {id: 17, text: "Colocación de losas", start_date: "2024-05-01", end_date: "2024-05-20", duration: 20, parent: 15},
+            {id: 18, text: "Revisión estructural", start_date: "2024-05-21", end_date: "2024-05-30", duration: 10, parent: 15},
+            {id: 19, text: "Instalaciones eléctricas y sanitarias (1ª fase)", start_date: "2024-06-01", duration: 45, parent: 6},
+            {id: 20, text: "Instalación de tuberías de agua", start_date: "2024-06-01", end_date: "2024-06-15", duration: 15, parent: 19},
+            {id: 21, text: "Instalación de sistema eléctrico", start_date: "2024-06-16", end_date: "2024-07-15", duration: 30, parent: 19},
+            {id: 22, text: "Acabados exteriores", start_date: "2024-07-16", duration: 60, parent: 6},
+            {id: 23, text: "Colocación de revestimientos", start_date: "2024-07-16", end_date: "2024-07-31", duration: 16, parent: 22},
+            {id: 24, text: "Pintura exterior", start_date: "2024-08-01", end_date: "2024-08-15", duration: 15, parent: 22},
+            {id: 25, text: "Instalación de ventanas", start_date: "2024-08-16", end_date: "2024-08-31", duration: 16, parent: 22},
+            {id: 26, text: "Instalaciones eléctricas y sanitarias (2ª fase)", start_date: "2024-09-01", duration: 60, parent: 6},
+            {id: 27, text: "Instalación de equipos sanitarios", start_date: "2024-09-01", end_date: "2024-09-15", duration: 15, parent: 26},
+            {id: 28, text: "Instalación de iluminación y tomacorrientes", start_date: "2024-09-16", end_date: "2024-10-30", duration: 45, parent: 26},
+            {id: 29, text: "Pruebas y puesta en marcha", start_date: "2024-11-01", end_date: "2024-11-15", duration: 15, parent: 6},
+            {id: 30, text: "Entrega del proyecto", start_date: "2024-11-16", end_date: "2024-11-30", duration: 15, parent: 6},
+        ],
+        links: []
+    };
+
+    gantt.init("gantt_here");
+    gantt.parse(tasks);
+</script>
+
+</body>
+</html>
